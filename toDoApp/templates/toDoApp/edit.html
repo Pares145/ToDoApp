@@ -1,10 +1,53 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <title>$Title$</title>
-</head>
-<body>
-$END$
-</body>
-</html>
+{% extends "base.html" %}
+
+{% block content %}
+
+<style>
+    .back-btn{
+        margin-left: 15px;
+
+    }
+
+    .update-btn{
+        margin-left: 15px;
+        margin-top: 0px;
+    }
+
+
+</style>
+
+<div class="row mt-4">
+    <div class="col">
+
+        <div class="right"><h4>Edit Item</h4></div>
+        <form action="update_todo/" method="post" class="form-inline">
+            {% csrf_token %}
+
+            <textarea name="content" cols="40" rows="1" class="form-control mb-2 mr-sm-2" placeholder="Type here">{{ edit_value }}</textarea>
+            <button type="submit" class="btn btn-primary mb-2 ml-2">Update</button>
+
+            <form action="{% url 'index' %}" method="post">
+                {% csrf_token %}
+                <button type="submit" class="btn btn-danger back-btn mb-2">Back</button>
+
+            </form>
+        </form>
+
+    </div>
+</div>
+<div class="row mt-4">
+    <div class="col">
+        <ul class="list-group">
+            {% for todo_item in todo_items %}
+                {% if todo_item.id == todo_id %}
+                     <li class="list-group-item active">{{ todo_item.text }}
+
+                {% else %}
+                    <li class="list-group-item">{{ todo_item.text }}
+            </li>
+                {% endif %}
+            {% endfor %}
+        </ul>
+    </div>
+</div>
+{% endblock content %}
